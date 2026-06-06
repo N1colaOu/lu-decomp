@@ -24,7 +24,8 @@ def pivot_(P, A, i):
             max_idx = k
     if max_idx != i:
         switch_rows(A, i, max_idx)
-        P[i] = max_idx
-        P[max_idx] = i
+        temp = P[i]
+        P[i] = P[max_idx]
+        P[max_idx] = temp
 
 
