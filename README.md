@@ -1,2 +1,2 @@
 # lu-decomp
-lu decomposition hw for uni
+lu decomposition hw for un
