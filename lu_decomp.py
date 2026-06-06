@@ -28,9 +28,3 @@ def pivot_(P, A, i):
         P[max_idx] = i
 
 
-
-
-_A = np.array([[1, 1, 3], [1, 2, 2], [2, 1, 5]], dtype=float)
-_P = np.array([0, 1, 2])
-lu_decomp(_A, _P, pivot=True)
-print(_A, _P)
