@@ -1,5 +1,7 @@
 import numpy as np
+from line_profiler import profile
 
+@profile
 def lu_decomp(A, P, pivot = False):    
 
     n = len(A)
