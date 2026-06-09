@@ -27,4 +27,55 @@ def pivot_(P, A, i):
         P[i] = P[max_idx]
         P[max_idx] = temp
 
+def forwards_sub(L, P, b):
+    n = len(b)
 
+    for i in range(n):
+        perm = P[i]
+        if perm != i:
+            temp = b[i]#switch b if we have to
+            b[i] = b[perm]
+            b[perm] = temp
+
+            temp = P[i]#switch P to not switc twice later
+            P[i] = P[perm]
+            P[perm] = temp
+
+    for i in range(n):
+        for j in range(i+1, n):
+            b[j] -= L[j, i]*b[i]
+            L[j, i] = 0.00
+
+
+def backwards_sub(R, P, b):
+    n = len(b)
+
+    for i in range(n):
+        perm = P[i]
+        if perm != i:
+            temp = b[i]#switch b if we have to
+            b[i] = b[perm]
+            b[perm] = temp
+
+            temp = P[i]#switch P to not switc twice later
+            P[i] = P[perm]
+            P[perm] = temp
+
+    for i in range(n-1, -1, -1):
+        b[i] /= R[i, i]
+        R[i, i] = 1.00
+        for j in range(i-1, -1, -1):
+            b[j] -= R[j, i]*b[i]
+            R[j, i] = 0.00
+
+A = np.array([[1., 1.,  3.],
+               [1.,  2.,  2.],
+               [2.,  1.,  5.]])
+b = np.array([2., 1., 1.])
+n = len(b)
+P = np.linspace(0, n-1, n, dtype=int)
+lu_decomp(A, P, pivot=True)
+print(A)
+forwards_sub(A, P, b)
+backwards_sub(A, P, b)
+print(b)
