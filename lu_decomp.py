@@ -67,15 +67,3 @@ def backwards_sub(R, P, b):
         for j in range(i-1, -1, -1):
             b[j] -= R[j, i]*b[i]
             R[j, i] = 0.00
-
-A = np.array([[1., 1.,  3.],
-               [1.,  2.,  2.],
-               [2.,  1.,  5.]])
-b = np.array([2., 1., 1.])
-n = len(b)
-P = np.linspace(0, n-1, n, dtype=int)
-lu_decomp(A, P, pivot=True)
-print(A)
-forwards_sub(A, P, b)
-backwards_sub(A, P, b)
-print(b)
