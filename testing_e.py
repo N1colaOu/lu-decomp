@@ -1,12 +1,12 @@
-import numpy as np
+from numpy import array, linspace
 import lu_decomp as lu
 
-A = np.array([[0., 1.,  3.],#problem because 0 is a leading element
+A = array([[0., 1.,  3.],#problem because 0 is a leading element
                [1.,  2.,  2.],
                [2.,  1.,  5.]])
-b = np.array([2., 1., 1.])
+b = array([2., 1., 1.])
 n = len(b)
-P = np.linspace(0, n-1, n, dtype=int)
+P = linspace(0, n-1, n, dtype=int)
 
 lu.lu_decomp(A, P, pivot=False)
 print("Decomposed Matrix:")

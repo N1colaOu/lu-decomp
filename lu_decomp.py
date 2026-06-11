@@ -1,4 +1,4 @@
-import numpy as np
+from numpy import linspace, abs, copy
 def lu_decomp(A, P, pivot = False):    
 
     n = len(A)
@@ -12,14 +12,14 @@ def lu_decomp(A, P, pivot = False):
                 A[j, k] -= A[j,i]*A[i, k]  # we setup the U part
 
 def switch_rows(A, i, j):
-    temp = np.copy(A[i,:])
+    temp = copy(A[i,:])
     A[i,:] = A[j,:]
     A[j,:] = temp
 def pivot_(P, A, i):
     n = len(A)
     max_idx = i
     for k in range(i+1, n):
-        if np.abs(A[max_idx, i]) <= np.abs(A[k, i]):
+        if abs(A[max_idx, i]) <= abs(A[k, i]):
             max_idx = k
     if max_idx != i:
         switch_rows(A, i, max_idx)
@@ -70,7 +70,7 @@ def backwards_sub(R, P, b):
 
 def solve(A, b):
     n = len(A)
-    P = np.linspace(0, n-1, n, dtype=int)
+    P = linspace(0, n-1, n, dtype=int)
     lu_decomp(A, P, pivot=True)
     forwards_sub(A, P, b)
     backwards_sub(A, P, b)

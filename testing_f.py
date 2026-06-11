@@ -1,18 +1,18 @@
-import numpy as np
+from numpy import linspace, power, abs, zeros
 import lu_decomp as lu
 import error as err
 import matplotlib.pyplot as plt
-n_arr = np.linspace(2, 20, 19, dtype=int)
+n_arr = linspace(2, 20, 19, dtype=int)
 err_1 = []
 err_hilbert = []
 for n in n_arr:
     x_noise = [1]*n
-    A1 = np.zeros([n, n])
+    A1 = zeros([n, n])
     for i in range(n):
         for j in range(n):
-            A1[i, n-j-1] = np.power(1/3, np.abs(i-j)) + np.power(1/2, j+i) + 10e-10
+            A1[i, n-j-1] = power(1/3, abs(i-j)) + power(1/2, j+i) + 10e-10
 
-    Ah = np.zeros([n, n])
+    Ah = zeros([n, n])
     for i in range(n):
         for j in range(n):
             Ah[i, j] = 1/(i+j+1)
