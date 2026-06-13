@@ -2,7 +2,7 @@ from numpy import linspace, abs, copy
 
 def lu_decomp(A, pivot = False):    
     n = len(A)
-    P = linspace(0, n-1, n, dtype=int)
+    P = linspace(0, n-1, n, dtype=int) #permutation vector
     for i in range(n):
         if pivot:
             #here we pivot
@@ -21,11 +21,11 @@ def find_and_pivot(A, P, i):
     max_idx = i
     for z in range(i+1, n):
         if abs(A[max_idx, i]) < abs(A[z, i]):
-            max_idx = z
+            max_idx = z #we get max element
     if max_idx != i:
-        switch_rows(A, i, max_idx)
+        switch_rows(A, i, max_idx) #switch rows in A
         temp = P[i]
-        P[i] = P[max_idx]
+        P[i] = P[max_idx] #adjust perm vector
         P[max_idx] = temp
 
 def forwards_sub(L, P, b):
@@ -44,7 +44,7 @@ def backwards_sub(R, b):
         for j in range(i-1, -1, -1):
             b[j] -= R[j, i]*b[i]
 
-def part_lu_decomp(A, n, P, k=0, pivot=False):
+def part_lu_decomp(A, n, P, k=0, pivot=False): #analog to the lu_decomp method but in a recursion variant
     if k < n:
         if pivot:
             find_and_pivot(A, P, k)

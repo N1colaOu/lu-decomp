@@ -7,7 +7,7 @@ import time as time
 
 n = 3
 A1 = rand(n, n)
-A2 = copy(A1)
+A2 = copy(A1) #three different matrices, because my methods edit them
 A3 = copy(A1)
 b1 = rand(n)
 
@@ -37,4 +37,4 @@ print(f'Time mine: {time_mine}')
 print(f'Time partitioned: {time_part}')
 print(f'Time scipy: {time_scipy}')
 
-print(f'Diff between scipy and mine / scipy and partitioned: {err.get_norm_2(x_scipy-x_2)} , {err.get_norm_2(x_scipy-x_3)}')
+print(f'Diff between scipy and mine / scipy and partitioned: {err.get_norm_2(x_scipy-x_2)} , {err.get_norm_2(x_scipy-x_3)}') #difference in answers

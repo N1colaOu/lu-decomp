@@ -2,14 +2,14 @@ import numpy as np
 import lu_decomp as lu
 
 
-def get_error(A, x_noise):
-    b = np.matmul(A, x_noise)
+def get_error(A, x_exact):
+    b = np.matmul(A, x_exact) #we get b
     n = len(A)
 
     (A, P) = lu.lu_decomp(A, pivot=False)
-    lu.forwards_sub(A, P, b)
-    lu.backwards_sub(A, P, b)
-    err = get_norm_2(b-x_noise)/get_norm_2(x_noise)
+    x = lu.forwards_sub(A, P, b)
+    lu.backwards_sub(A, x) # we get x, which shoudl be the same as x_exact
+    err = get_norm_2(x-x_exact)/get_norm_2(x_exact)
     return err
 
 def get_norm_2(v):
