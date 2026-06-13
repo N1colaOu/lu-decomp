@@ -14,16 +14,14 @@ def lu_decomp(A, pivot = False):
     return A, P
 
 def switch_rows(A, i, j):
-    temp = copy(A[i,:])
-    A[i,:] = A[j,:]
-    A[j,:] = temp
-    
+    A[[i, j]] = A[[j, i]]   
+
 def find_and_pivot(A, P, i):
     n = len(A)
     max_idx = i
-    for k in range(i+1, n):
-        if abs(A[max_idx, i]) <= abs(A[k, i]):
-            max_idx = k
+    for z in range(i+1, n):
+        if abs(A[max_idx, i]) < abs(A[z, i]):
+            max_idx = z
     if max_idx != i:
         switch_rows(A, i, max_idx)
         temp = P[i]
@@ -32,47 +30,22 @@ def find_and_pivot(A, P, i):
 
 def forwards_sub(L, P, b):
     n = len(b)
-
-    for i in range(n):
-        perm = P[i]
-        if perm != i:
-            temp = b[i]#switch b if we have to
-            b[i] = b[perm]
-            b[perm] = temp
-
-            temp = P[i]#switch P to not switc twice later
-            P[i] = P[perm]
-            P[perm] = temp
-
+    b_perm = b[P]
     for i in range(n):
         for j in range(i+1, n):
-            b[j] -= L[j, i]*b[i]
-            L[j, i] = 0.00
+            b_perm[j] -= L[j, i]*b_perm[i]
+    return b_perm
 
 
-def backwards_sub(R, P, b):
+def backwards_sub(R, b):
     n = len(b)
-
-    for i in range(n):
-        perm = P[i]
-        if perm != i:
-            temp = b[i]#switch b if we have to
-            b[i] = b[perm]
-            b[perm] = temp
-
-            temp = P[i]#switch P to not switc twice later
-            P[i] = P[perm]
-            P[perm] = temp
-
     for i in range(n-1, -1, -1):
         b[i] /= R[i, i]
-        R[i, i] = 1.00
         for j in range(i-1, -1, -1):
             b[j] -= R[j, i]*b[i]
-            R[j, i] = 0.00
 
 def part_lu_decomp(A, n, P, k=0, pivot=False):
-    if k < n-1:
+    if k < n:
         if pivot:
             find_and_pivot(A, P, k)
         for i in range(k+1, n):
