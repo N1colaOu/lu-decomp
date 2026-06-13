@@ -75,3 +75,13 @@ def solve(A, b):
     forwards_sub(A, P, b)
     backwards_sub(A, P, b)
     return b
+
+def part_lu_decomp(A, n, k = 0):
+    if k < n-1:
+        c = A[k, k]
+        for i in range(k+1, n):
+            A[i, k] /= c
+        for i in range(k+1, n):
+            for j in range(k+1, n):
+                A[i, j] -= A[i, k]*A[k, j]
+        part_lu_decomp(A, n, k+1)
