@@ -1,13 +1,13 @@
 from numpy import linspace, abs, copy
-def lu_decomp(A, pivot = False):    
 
+def lu_decomp(A, pivot = False):    
     n = len(A)
     P = linspace(0, n-1, n, dtype=int)
     for i in range(n):
         if pivot:
-            pivot_(P, A, i)
-        for j in range(i+1, n):
             #here we pivot
+            find_and_pivot(A, P, i)
+        for j in range(i+1, n):
             A[j, i] /= A[i, i] # we setup the L part
             for k in range(i+1, n):
                 A[j, k] -= A[j,i]*A[i, k]  # we setup the U part
@@ -17,7 +17,8 @@ def switch_rows(A, i, j):
     temp = copy(A[i,:])
     A[i,:] = A[j,:]
     A[j,:] = temp
-def pivot_(P, A, i):
+    
+def find_and_pivot(A, P, i):
     n = len(A)
     max_idx = i
     for k in range(i+1, n):
@@ -70,20 +71,12 @@ def backwards_sub(R, P, b):
             b[j] -= R[j, i]*b[i]
             R[j, i] = 0.00
 
-def solve(A, b):
-    n = len(A)
-    P = linspace(0, n-1, n, dtype=int)
-    lu_decomp(A, P, pivot=True)
-    forwards_sub(A, P, b)
-    backwards_sub(A, P, b)
-    return b
-
-def part_lu_decomp(A, n, k = 0):
+def part_lu_decomp(A, n, P, k=0, pivot=False):
     if k < n-1:
-        c = A[k, k]
+        if pivot:
+            find_and_pivot(A, P, k)
         for i in range(k+1, n):
-            A[i, k] /= c
-        for i in range(k+1, n):
+            A[i, k] /= A[k, k]
             for j in range(k+1, n):
                 A[i, j] -= A[i, k]*A[k, j]
-        part_lu_decomp(A, n, k+1)
+        part_lu_decomp(A, n, P, k+1, pivot)

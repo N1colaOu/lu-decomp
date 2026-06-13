@@ -6,8 +6,9 @@ A = array([[1., 1.,  3.],
                [2.,  1.,  5.]])
 b = array([2., 1., 1.])
 n = len(A)
-
-(A, P) = lu.lu_decomp(A, pivot=True)
+P = linspace(0, n-1, n, dtype=int)
+lu.part_lu_decomp(A, n, P, pivot=False)
+print(P)
 print("Decomposed Matrix:")
 print(A)
 lu.forwards_sub(A, P, b)
