@@ -5,10 +5,9 @@ A = array([[1., 1.,  3.],
                [1.,  2.,  2.],
                [2.,  1.,  5.]])
 b = array([2., 1., 1.])
-n = len(b)
-P = linspace(0, n-1, n, dtype=int)
+n = len(A)
 
-lu.lu_decomp(A, P, pivot=True)
+(A, P) = lu.lu_decomp(A, pivot=True)
 print("Decomposed Matrix:")
 print(A)
 lu.forwards_sub(A, P, b)

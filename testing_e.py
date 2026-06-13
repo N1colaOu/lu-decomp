@@ -6,9 +6,8 @@ A = array([[0., 1.,  3.],#problem because 0 is a leading element
                [2.,  1.,  5.]])
 b = array([2., 1., 1.])
 n = len(b)
-P = linspace(0, n-1, n, dtype=int)
 
-lu.lu_decomp(A, P, pivot=False)
+(A, P) = lu.lu_decomp(A, pivot=False)
 print("Decomposed Matrix:")
 print(A)
 lu.forwards_sub(A, P, b)

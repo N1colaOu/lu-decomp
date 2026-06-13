@@ -2,6 +2,7 @@ from numpy import linspace, power, abs, zeros
 import lu_decomp as lu
 import error as err
 import matplotlib.pyplot as plt
+
 n_arr = linspace(2, 20, 19, dtype=int)
 err_1 = []
 err_hilbert = []

@@ -1,7 +1,8 @@
 from numpy import linspace, abs, copy
-def lu_decomp(A, P, pivot = False):    
+def lu_decomp(A, pivot = False):    
 
     n = len(A)
+    P = linspace(0, n-1, n, dtype=int)
     for i in range(n):
         if pivot:
             pivot_(P, A, i)
@@ -10,6 +11,7 @@ def lu_decomp(A, P, pivot = False):
             A[j, i] /= A[i, i] # we setup the L part
             for k in range(i+1, n):
                 A[j, k] -= A[j,i]*A[i, k]  # we setup the U part
+    return A, P
 
 def switch_rows(A, i, j):
     temp = copy(A[i,:])
