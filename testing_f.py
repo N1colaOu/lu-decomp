@@ -1,4 +1,4 @@
-from numpy import linspace, power, abs, zeros
+from numpy import linspace, power, abs, zeros, copy
 import lu_decomp as lu
 import error as err
 import matplotlib.pyplot as plt
@@ -19,15 +19,16 @@ for n in n_arr:
     for i in range(1, n+1):
         for j in range(1, n+1):
             Ah[i-1, j-1] = 1/(i+j+1)
-    
+    A1_without = copy(A1)
+    Ah_without = copy(Ah)
     err_1_with.append(err.get_error(A1, x_noise, True))
-    err_1_without.append(err.get_error(A1, x_noise, False))
+    err_1_without.append(err.get_error(A1_without, x_noise, False))
     err_hilbert_with.append(err.get_error(Ah, x_noise, True))
-    err_hilbert_without.append(err.get_error(Ah, x_noise, False))
+    err_hilbert_without.append(err.get_error(Ah_without, x_noise, False))
 
 
 plt.figure(1)
-plt.semilogy(n_arr, err_1_with, label="Matrix 1 With")
+plt.semilogy(n_arr, err_1_with, label="Matrix 1 With", linestyle='dashed')
 plt.semilogy(n_arr, err_1_without, label="Matrix 1 Without")
 plt.title("Error of Matrix 1: Log plot")
 plt.grid()
@@ -35,7 +36,7 @@ plt.legend()
 plt.savefig('./build/error_1.png')
 
 plt.figure(2)
-plt.semilogy(n_arr, err_hilbert_with, label="Hilbert Matrix With")
+plt.semilogy(n_arr, err_hilbert_with, label="Hilbert Matrix With", linestyle='dashed')
 plt.semilogy(n_arr, err_hilbert_without, label="Hilbert Matrix Without")
 plt.title("Error of Hilbert Matrix: Log plot")
 plt.grid()
@@ -43,9 +44,9 @@ plt.legend()
 plt.savefig('./build/error_hilbert.png')
 
 plt.figure(3)
-plt.semilogy(n_arr, err_1_with, label="Matrix 1 With")
+plt.semilogy(n_arr, err_1_with, label="Matrix 1 With", linestyle='dashed')
 plt.semilogy(n_arr, err_1_without, label="Matrix 1 Without")
-plt.semilogy(n_arr, err_hilbert_with, label="Hilbert Matrix With")
+plt.semilogy(n_arr, err_hilbert_with, label="Hilbert Matrix With", linestyle='dashed')
 plt.semilogy(n_arr, err_hilbert_without, label="Hilbert Matrix Without")
 plt.title("Comparison of the Errors: Log Plot")
 plt.legend()

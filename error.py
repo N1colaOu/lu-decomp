@@ -6,9 +6,9 @@ def get_error(A, x_exact, pivot):
     b = np.matmul(A, x_exact) #we get b
     n = len(A)
 
-    (A, P) = lu.lu_decomp(A, pivot=pivot)
-    x = lu.forwards_sub(A, P, b)
-    lu.backwards_sub(A, x)
+    (L_U, P) = lu.lu_decomp(A, pivot=pivot)
+    x = lu.forwards_sub(L_U, P, b)
+    lu.backwards_sub(L_U, x)
     err = get_norm_2(x-x_exact)/get_norm_2(x_exact)
     return err
 
