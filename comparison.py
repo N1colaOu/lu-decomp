@@ -5,7 +5,7 @@ from numpy import linspace, copy, abs
 import error as err
 import time as time
 
-n = 3
+n = 200
 A1 = rand(n, n)
 A2 = copy(A1) #three different matrices, because my methods edit them
 A3 = copy(A1)
